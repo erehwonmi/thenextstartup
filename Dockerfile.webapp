@@ -1,0 +1,61 @@
+# Debian based
+FROM node:20-bookworm-slim AS base
+
+# Install dependencies only when needed
+FROM base AS deps
+WORKDIR /app
+
+# Install dependencies based on the preferred package manager
+RUN unset https_proxy && unset http_proxy
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm config set fetch-retry-maxtimeout 6000000 && npm install && npm cache clean --force; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
+
+# Rebuild the source code only when needed
+FROM base AS builder
+ENV NX_SKIP_NX_CACHE=true
+ENV NX_DAEMON=false
+ENV NEXT_PRIVATE_STANDALONE true
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+
+ENV NEXT_TELEMETRY_DISABLED 1
+ENV NX_SKIP_NX_CACHE=true
+ENV NX_DAEMON=false
+ENV NODE_ENV production
+ENV ENV PRODUCTION
+RUN \
+  if [ -f yarn.lock ]; then yarn run build; \
+  elif [ -f package-lock.json ]; then npm run db:generate && npm run web-app:build-production; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
+
+# Production image, copy all the files and run next
+FROM base AS runner
+WORKDIR /app
+ENV NEXT_SHARP_PATH=/app/apps/web-app/.next/standalone/node_modules/sharp
+ENV NODE_ENV production
+ENV NEXT_TELEMETRY_DISABLED 1
+ENV ENV PRODUCTION
+
+
+COPY --from=builder  /app/apps/web-app /app/apps/web-app
+RUN mkdir -p /app/apps/web-app/.next/standalone/apps/web-app/public
+RUN mv /app/apps/web-app/public/* /app/apps/web-app/.next/standalone/apps/web-app/public
+RUN mkdir -p /app/apps/web-app/.next/standalone/apps/web-app/public/_next/static
+RUN mv /app/apps/web-app/.next/static/* /app/apps/web-app/.next/standalone/apps/web-app/public/_next/static
+COPY .env /app/apps/web-app/.next/standalone/apps/web-app
+
+EXPOSE 3000
+ENV PORT 3000
+ENV HOSTNAME "0.0.0.0"
+
+CMD ["node", "/app/apps/web-app/.next/standalone/apps/web-app/server.js"]

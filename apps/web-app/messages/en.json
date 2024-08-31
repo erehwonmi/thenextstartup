@@ -1,0 +1,29 @@
+{
+  "Index": {},
+  "Hero": {
+    "description": "<strong>TheNextStartup</strong> is an open-source template designed with scalability in mind, providing a swift pathway to launch your startup. It ensures high engineering quality while being cost-effective, making it an ideal choice for aspiring entrepreneurs.",
+    "starOnGithub": "<star>Star it on</star><github>Github</github>",
+    "getStarted": "Get Started"
+  },
+  "BuiltWith": {
+    "supercharge": "Supercharge Your Business With Batteries"
+  },
+  "Benefits": {
+    "Benefits1_label": "Connect, Protect and Build Everywhere",
+    "Benefits1_description": "Register your app domain name, bulletproof it from intruders, analyze its web traffic and more using <strong>Cloudflare</strong> services.",
+    "Benefits2_label": "Easy deployments",
+    "Benefits2_description": "<strong>Coolify</strong> lets you decide where to deploy your application, easy and cost-effective with no vendor lock-ins.",
+    "Benefits3_label": "Ready-made Full-stack Application",
+    "Benefits3_description": "With <strong>NextJS</strong> and our tools, Auth, Front-end, Back-end, Components, and Type-safety come seamlessly integrated.",
+    "Benefits4_label": "Smart Monorepos",
+    "Benefits4_description": "As startups grow, managing multiple apps and tasks becomes complex. An <strong>NX</strong> monorepo simplifies this with shared libraries and dependencies in a single repository.",
+    "Benefits5_label": "Serving Global Data Made Simple",
+    "Benefits5_description": "Enjoy effortless global replication and lightning-fast transactions with <strong>Turso</strong>. Say goodbye to migration hassles with <strong>Drizzle ORM.</strong>",
+    "Benefits6_label": "Documentation included",
+    "Benefits6_description": "Language internationalization and payment integration with Stripe is included, with more features on the way. Check the documentation for details. Thank you!"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, jp {🇯🇵 Japanese} en {🇺🇸 English} other {Unknown}}"
+  }
+}

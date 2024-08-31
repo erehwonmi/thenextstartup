@@ -1,0 +1,5 @@
+@import '../../../../libs/ts/uikit-utils/src/global.css';
+
+body {
+  font-family: var(--font-notoSans), sans-serif;
+}

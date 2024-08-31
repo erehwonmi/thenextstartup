@@ -1,0 +1,29 @@
+{
+  "Index": {},
+  "Hero": {
+    "description": "<strong>TheNextStartup</strong> はスケーラビリティを考慮して設計されたオープンソースのテンプレートで、スタートアップを迅速に立ち上げるための道を提供します。高いエンジニアリング品質を維持しつつコスト効果が高く、起業家志望者に最適な選択肢です。",
+    "starOnGithub": "<github>GitHub</github><star>でスターを付けてください</star>",
+    "getStarted": "始める"
+  },
+  "BuiltWith": {
+    "supercharge": "バッテリーでビジネスを強化"
+  },
+  "Benefits": {
+    "Benefits1_label": "どこでも接続、保護、構築",
+    "Benefits1_description": "アプリのドメイン名を登録し、不正侵入者から保護し、Webトラフィックを分析するなど、<strong>Cloudflare</strong> のサービスを利用できます。",
+    "Benefits2_label": "簡単なデプロイメント",
+    "Benefits2_description": "<strong>Coolify</strong> を使用すると、アプリケーションのデプロイ先を決定でき、コスト効率が高く、ベンダーロックインなしで利用できます。",
+    "Benefits3_label": "用意されたフルスタックアプリケーション",
+    "Benefits3_description": "<strong>NextJS</strong> と当社のツールを使用すると、認証、フロントエンド、バックエンド、コンポーネント、タイプセーフティがシームレスに統合されています。",
+    "Benefits4_label": "スマートモノレポ",
+    "Benefits4_description": "スタートアップが成長するにつれて、複数のアプリケーションやタスクを管理するのが複雑になります。<strong>NX</strong> のモノレポは、共有ライブラリと依存関係を単一のリポジトリで簡素化します。",
+    "Benefits5_label": "グローバルデータの簡単な提供",
+    "Benefits5_description": "<strong>Turso</strong> を使用して、簡単なグローバル複製と超高速トランザクションをお楽しみください。<strong>Drizzle ORM</strong> を使用してマイグレーションの手間を解消しましょう。",
+    "Benefits6_label": "ドキュメントが含まれています",
+    "Benefits6_description": "言語の国際化とStripeとの支払い統合が含まれており、今後さらに多くの機能が追加される予定です。詳細はドキュメントをご確認ください。ありがとうございます！"
+  },
+  "LocaleSwitcher": {
+    "label": "Change language",
+    "locale": "{locale, select, jp {🇯🇵 Japanese} en {🇺🇸 English} other {Unknown}}"
+  }
+}

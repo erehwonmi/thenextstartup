@@ -1,0 +1,79 @@
+name: Build Admin App
+on:
+  push:
+    branches: ["main"]
+    paths:
+        - '.github/workflows/deploy-admin-app.yml'
+        - 'apps/admin-web/**'
+        - 'db/**/*.*'
+        - 'Dockerfile.adminapp'
+        - package.json
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: "erehwonmi/thenextstartup-admin"
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js 20.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.0
+          cache: 'npm'
+      - name: NPM Install
+        run: npm install
+      - name: NPM Install Drizzle-kit
+        run: npm install drizzle-kit
+      - name: Generate ENV File for DB
+        run: |
+          cat <<-EOF >> .env
+          DATABASE_URL=${{ secrets.DATABASE_URL }}
+          DB_AUTH_TOKEN=${{ secrets.DB_AUTH_TOKEN }}
+          EOF
+      - name: Generate Drizzle Client
+        run: npm run db:generate
+      - name: Push Drizzle Turso Schema
+        run: npm run db:push
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: generate
+    steps:
+      - name: "Clone repo"
+        uses: actions/checkout@v3
+      - name: Dynamically creating .env file
+        run: |
+          cat <<-EOF >> .env
+          NODE_ENV=PRODUCTION
+          ENV=PRODUCTION
+          AXIOM_TOKEN=${{ secrets.AXIOM_TOKEN }}
+          AXIOM_DATASET=${{ secrets.AXIOM_DATASET }}
+          DATABASE_URL=${{ secrets.DATABASE_URL }}
+          DB_AUTH_TOKEN=${{ secrets.DB_AUTH_TOKEN }}
+          HOST_NAME=${{ secrets.HOST_NAME }}
+          RESEND_API_KEY=${{ secrets.RESEND_API_KEY }}
+          EOF
+      - name: Login to ghcr.io
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GHCR_TOKEN  }}
+      - name: Build image and push to registry
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: Dockerfile.adminapp
+          platforms: linux/amd64
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+      - name: Deploy to Coolify
+        run: | 
+         curl --request GET '${{ secrets.COOLIFY_WEBHOOK_ADMINAPP }}' --header 'Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}'

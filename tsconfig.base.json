@@ -1,0 +1,30 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@admin-web/*": ["apps/admin-web/src/*"],
+      "@db": ["db"],
+      "@db/*": ["db/*"],
+      "@ts/auth": ["libs/ts/auth"],
+      "@ts/mailer": ["libs/ts/mailer"],
+      "@ts/uikit": ["libs/ts/uikit/src/index.ts"],
+      "@ts/uikit-utils": ["libs/ts/uikit-utils/src/index.ts"],
+      "@ts/uikit/icons": ["libs/ts/uikit/src/ui/icons/index.ts"],
+      "@web-app/*": ["apps/web-app/src/*"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

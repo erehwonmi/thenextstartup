@@ -1,0 +1,12 @@
+{
+  "name": "uikit",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "uikit/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "add-component": {
+      "executor": "@nx-extend/shadcn-ui:add"
+    }
+  }
+}
